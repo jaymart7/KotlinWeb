@@ -1,9 +1,11 @@
 import org.jetbrains.compose.compose
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension
+
+val ktorVersion: String by project
 
 plugins {
     kotlin("multiplatform")
+    kotlin("plugin.serialization") version "1.6.20"
     id("org.jetbrains.compose")
 }
 
@@ -19,6 +21,14 @@ kotlin {
         binaries.executable()
     }
     sourceSets {
+
+        val commonMain by getting {
+            dependencies {
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
+            }
+        }
+
         val jsMain by getting {
             kotlin.srcDir("src/main/kotlin")
             resources.srcDir("src/main/resources")
@@ -26,6 +36,8 @@ kotlin {
             dependencies {
                 implementation(compose.web.core)
                 implementation(compose.runtime)
+
+                implementation("io.ktor:ktor-client-core:$ktorVersion")
             }
         }
     }
