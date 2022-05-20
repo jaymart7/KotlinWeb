@@ -1,5 +1,8 @@
+package ui
+
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import io.ktor.client.*
 import kotlinx.coroutines.MainScope
 import kotlinx.serialization.json.Json
 import org.jetbrains.compose.web.css.*
@@ -7,6 +10,9 @@ import org.jetbrains.compose.web.renderComposable
 
 val scope = MainScope()
 val json = Json { ignoreUnknownKeys = true }
+val client = HttpClient()
+
+const val url = "http://localhost:8081"
 
 fun main() {
     renderComposable(rootElementId = "root") {
