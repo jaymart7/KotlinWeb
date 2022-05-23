@@ -1,7 +1,8 @@
-package ui.login
+package ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import common.Login
 import org.jetbrains.compose.web.attributes.InputType
 import org.jetbrains.compose.web.attributes.colspan
 import org.jetbrains.compose.web.css.percent

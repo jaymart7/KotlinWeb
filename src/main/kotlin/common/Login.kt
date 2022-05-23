@@ -1,4 +1,4 @@
-package ui.login
+package common
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,7 +26,8 @@ interface Login {
 }
 
 class LoginImpl(
-    private val accountRepository: AccountRepository
+    private val accountRepository: AccountRepository,
+    private val screenNavigator: ScreenNavigator
 ) : Login {
 
     private val _state: MutableStateFlow<Login.State> = MutableStateFlow(Login.State())
@@ -39,7 +40,8 @@ class LoginImpl(
                 _state.update {
                     val loginResponse = accountRepository.login(it.username, it.password)
                     println(loginResponse.name)
-                    it.copy(isLoading = false)
+                    screenNavigator.updateScreen(Screen.HOME)
+                    Login.State()
                 }
             } catch (e: Exception) {
                 _state.update { it.copy(loginError = e.message.orEmpty(), isLoading = false) }

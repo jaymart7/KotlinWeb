@@ -10,8 +10,8 @@ import kotlinx.serialization.encodeToString
 import model.request.LoginRequest
 import model.response.BaseResponse
 import model.response.LoginResponse
-import ui.json
-import ui.url
+import network.json
+import network.url
 
 interface AccountRepository {
 
