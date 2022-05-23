@@ -38,6 +38,7 @@ kotlin {
                 implementation(compose.runtime)
 
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
+                implementation("io.ktor:ktor-client-logging:$ktorVersion")
             }
         }
     }

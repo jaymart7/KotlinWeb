@@ -42,7 +42,7 @@ fun HomeScreen(updateScreen: (screen: Screen) -> Unit) {
 }
 
 suspend fun getProductList(): List<Product> {
-    val response: HttpResponse = client.get("https://jsonplaceholder.typicode.com/posts")
+    val response: HttpResponse = httpClient.get("https://jsonplaceholder.typicode.com/posts")
 
     return json.decodeFromString(
         response.body<String>().toString()
