@@ -21,6 +21,7 @@ interface Login {
         var username: String = "",
         var password: String = "",
         var loginError: String? = null,
+        var isLoginEnabled: Boolean = false,
         var isLoading: Boolean = false
     )
 }
@@ -35,7 +36,7 @@ class LoginImpl(
 
     override fun login() {
         scope.launch {
-            _state.update { it.copy(isLoading = true, loginError = null) }
+            _state.update { it.copy(isLoading = true, loginError = null, isLoginEnabled = false) }
             try {
                 _state.update {
                     val loginResponse = accountRepository.login(it.username, it.password)
@@ -44,17 +45,33 @@ class LoginImpl(
                     Login.State()
                 }
             } catch (e: Exception) {
-                _state.update { it.copy(loginError = e.message.orEmpty(), isLoading = false) }
+                _state.update {
+                    it.copy(
+                        loginError = e.message.orEmpty(),
+                        isLoading = false,
+                        isLoginEnabled = true
+                    )
+                }
             }
         }
     }
 
     override fun onUsernameChanged(value: String) {
         _state.update { it.copy(username = value) }
+        updateLoginButtonState()
     }
 
     override fun onPasswordChanged(value: String) {
         _state.update { it.copy(password = value) }
+        updateLoginButtonState()
+    }
+
+    private fun updateLoginButtonState() {
+        _state.update {
+            it.copy(
+                isLoginEnabled = it.username.isNotBlank() && it.password.isNotBlank()
+            )
+        }
     }
 
 }
