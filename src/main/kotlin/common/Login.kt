@@ -39,8 +39,7 @@ class LoginImpl(
             _state.update { it.copy(isLoading = true, loginError = null, isLoginEnabled = false) }
             try {
                 _state.update {
-                    val loginResponse = accountRepository.login(it.username, it.password)
-                    println(loginResponse.name)
+                    accountRepository.login(it.username, it.password)
                     screenNavigator.updateScreen(Screen.HOME)
                     Login.State()
                 }
